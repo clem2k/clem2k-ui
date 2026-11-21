@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clem2k — HTML sans React</title>
+<link rel="icon" href="../assets/logo/clem2k.ico">
+<link rel="stylesheet" href="../dist/clem2k.css">
+</head>
+<body class="ck-wall">
+<!-- Sans React : les mêmes classes ck- fonctionnent en HTML pur (Jinja, Hugo, Django…). -->
+<nav class="ck-glass ck-nav" aria-label="Navigation principale" style="margin-top:12px">
+  <a class="ck-brand" href="#"><img src="../assets/logo/logo-transparent.png" alt="">clem2k</a>
+  <div class="ck-nav-links"><a href="#" aria-current="page">projets</a><a href="#">blog</a></div>
+  <button class="ck-btn ck-btn-primary ck-btn-sm">Me suivre</button>
+</nav>
+<main style="max-width:720px;margin:48px auto;padding:24px;background:var(--bg-100)">
+  <h1 class="ck-t-h1" style="color:var(--ink-strong)"><span style="color:var(--neon)">&gt; </span>HTML pur</h1>
+  <p class="ck-t-body">Les composants React ne sont pas obligatoires : toutes les classes sont utilisables directement.</p>
+  <div class="ck-alert ck-alert-ok" role="status">
+    <svg class="ck-icon" width="12" height="12"><use href="../dist/icons.svg#check"/></svg>
+    <div><strong>[ok] sprite d'icônes</strong>&lt;svg&gt;&lt;use href="dist/icons.svg#check"/&gt;&lt;/svg&gt; prend la couleur du texte.</div>
+  </div>
+  <div class="ck-field" style="margin:24px 0">
+    <label class="ck-label" for="h">Nom d'hôte</label>
+    <div class="ck-prompt"><input id="h" class="ck-input" placeholder="vision.local"></div>
+    <span class="ck-help">Sans le protocole.</span>
+  </div>
+  <p style="display:flex;gap:8px">
+    <button class="ck-btn ck-btn-primary">Déployer</button>
+    <button class="ck-btn">Annuler</button>
+    <span class="ck-badge ck-badge-warn">restart</span>
+  </p>
+  <div class="ck-term"><span class="p">$ </span>python -m clem2k_ui
+<span class="ok">[ok]</span> thème chargé
+<span class="p">$ </span><span class="ck-cursor"></span></div>
+</main>
+</body>
+</html>

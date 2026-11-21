@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clem2k — exemple app desktop</title>
+<link rel="icon" href="../assets/logo/clem2k.ico">
+<link rel="stylesheet" href="../dist/clem2k.css">
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="../dist/clem2k.js"></script>
+<style>html,body{height:100%}body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;box-sizing:border-box}#root{width:100%;max-width:1100px}</style>
+</head>
+<body class="ck-wall">
+<div id="root"></div>
+<script>
+var C = window.clem2k, h = React.createElement, F = React.Fragment;
+var rows = [
+  {id:1,n:"traefik",i:"traefik:3.2",s:"up",t:"ok",m:"64 Mo"},
+  {id:2,n:"nextcloud",i:"nextcloud:30",s:"up",t:"ok",m:"412 Mo"},
+  {id:3,n:"backup",i:"restic:0.17",s:"restart",t:"warn",m:"—"},
+  {id:4,n:"sentinel",i:"clem2k/bot",s:"down",t:"err",m:"0"}];
+function App(){
+  var pal = React.useState(false), toast = React.useState(null), dlg = React.useState(false), sel = React.useState(2);
+  React.useEffect(function(){
+    function k(e){ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();pal[1](true)} if(e.key==="Escape")pal[1](false) }
+    window.addEventListener("keydown",k); return function(){window.removeEventListener("keydown",k)};
+  },[]);
+  function notify(msg,tone){ toast[1]({msg:msg,tone:tone}); if(tone!=="err") setTimeout(function(){toast[1](null)},5000); }
+  return h(F, null,
+    h(C.Window, {title:"vision — conteneurs", style:{height:560},
+      sidebar:h(C.Sidebar,{sections:[{title:"serveurs",items:[{label:"vision",icon:"server",current:true,count:4},{label:"proxmox",icon:"chip",count:3}]},{title:"outils",items:[{label:"terminal",icon:"terminal"},{label:"logs",icon:"file"},{label:"réglages",icon:"settings"}]},{title:"bots",items:[{label:"sentinel",icon:"bot",count:1}]}]}),
+      toolbar:h("div",{style:{display:"flex",gap:12,alignItems:"center"}},
+        h(C.Toolbar,{label:"Actions"},
+          h(C.IconButton,{icon:"play",label:"Démarrer",onClick:function(){notify("Conteneur démarré.","ok")}}),
+          h(C.IconButton,{icon:"power",label:"Arrêter"}),
+          h(C.Toolbar.Separator),
+          h(C.IconButton,{icon:"download",label:"Mettre à jour"}),
+          h(C.IconButton,{icon:"trash",label:"Supprimer",onClick:function(){dlg[1](true)}})),
+        h("div",{style:{marginLeft:"auto",width:260}},h(C.SearchField,{placeholder:"Filtrer…"}))),
+      statusbar:h(C.StatusBar,{left:["connecté à vision.local"],right:["Ctrl K : commandes","docker 27.3"]})},
+      h(C.Tabs,{tabs:[
+        {id:"c",label:"conteneurs",content:h(C.Table,{selected:sel[0],columns:[{key:"n",label:"service"},{key:"i",label:"image"},{key:"s",label:"état",render:function(r){return h(C.Badge,{tone:r.t},r.s)}},{key:"m",label:"ram",numeric:true}],rows:rows})},
+        {id:"l",label:"logs",content:h(C.Terminal,{lines:[{tone:"ok",text:"backup 03:00 terminé"},{tone:"err",text:"sentinel exited (1)"}]})},
+        {id:"s",label:"réglages",content:h("div",{style:{display:"grid",gap:16,maxWidth:420}},h(C.Switch,{label:"Redémarrage auto",defaultChecked:true}),h(C.Slider,{label:"Limite CPU",defaultValue:60,format:function(v){return v+"%"}}),h(C.Select,{label:"Réseau",options:["proxy","interne","host"]}))}]})),
+    h("div",{style:{display:"flex",justifyContent:"center"}},
+      h(C.Dock,{items:[{label:"Terminal",icon:"terminal",current:true},{label:"Code",icon:"code"},{label:"Fichiers",icon:"folder"},{label:"Réseau",icon:"network"},"-",{label:"Bots",icon:"bot"},{label:"Réglages",icon:"settings"}]})),
+    pal[0] && h("div",{className:"ck-overlay",onClick:function(e){if(e.target===e.currentTarget)pal[1](false)}},
+      h(C.CommandPalette,{autoFocus:true,items:[{label:"Ouvrir un terminal",icon:"terminal",hint:"Ctrl T"},{label:"Redémarrer un conteneur",icon:"power"},{label:"Chercher dans les logs",icon:"search"},{label:"Réglages",icon:"settings"}],onSelect:function(x){pal[1](false);notify(x.label,"ok")}})),
+    h(C.Dialog,{open:dlg[0],onClose:function(){dlg[1](false)},title:"Supprimer sentinel ?",actions:h(F,null,h(C.Button,{onClick:function(){dlg[1](false)}},"Annuler"),h(C.Button,{variant:"danger",onClick:function(){dlg[1](false);notify("Suppression impossible : conteneur verrouillé.","err")}},"Supprimer"))},
+      h("p",null,"Le conteneur et ses volumes seront supprimés. Action définitive.")),
+    toast[0] && h("div",{style:{position:"fixed",right:24,bottom:24}},h(C.Toast,{tone:toast[0].tone,onClose:function(){toast[1](null)}},toast[0].msg))
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

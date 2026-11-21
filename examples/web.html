@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clem2k — exemple page web</title>
+<link rel="icon" href="../assets/logo/clem2k.ico">
+<link rel="stylesheet" href="../dist/clem2k.css">
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="../dist/clem2k.js"></script>
+<style>
+  .section{max-width:1080px;margin:0 auto;padding:48px 24px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .grid .ck-card{max-width:none}
+  h2{font-size:28px;line-height:36px;color:var(--ink-strong);margin:0 0 24px}
+  h2::before{content:"> ";color:var(--neon)}
+</style>
+</head>
+<body class="ck-wall" style="background-attachment:fixed">
+<div id="root"></div>
+<script>
+var C = window.clem2k, h = React.createElement, F = React.Fragment;
+function App(){
+  var theme = React.useState("dark");
+  React.useEffect(function(){ document.documentElement.dataset.theme = theme[0]; }, [theme[0]]);
+  return h(F, null,
+    h("div", {style:{position:"sticky",top:0,zIndex:10,padding:"12px 16px"}},
+      h(C.NavBar, {logo:"../assets/logo/logo-transparent.png",
+        links:[{label:"projets",href:"#projets",current:true},{label:"blog",href:"#blog"},{label:"homelab",href:"#lab"}],
+        actions:h(C.SegmentedControl,{label:"Thème",options:[{value:"dark",label:"dark"},{value:"hc",label:"hc"}],value:theme[0],onChange:theme[1]})})),
+    h(C.Hero, {eyebrow:"dev · maker · retro gamer", title:"wake up, neo",
+      text:"Des outils en Python, un homelab qui tourne tout seul et des objets imprimés en 3D. Ici, le code et les notes.",
+      actions:h(F,null,h(C.Button,{variant:"primary",size:"lg",icon:"play"},"Voir les projets"),h(C.Button,{variant:"glass",size:"lg"},"Lire le blog")),
+      aside:h("img",{src:"../assets/logo/logo-transparent.png",alt:"",style:{width:"100%",maxWidth:300,display:"block",margin:"auto"}})}),
+    h("main", {style:{background:"var(--bg-100)"}},
+      h("section", {className:"section",id:"projets"}, h("h2",null,"projets"),
+        h("div",{className:"grid"},
+          h(C.Card,{meta:"homelab · python",title:"VISION",href:"#",actions:h(C.Badge,{tone:"ok"},"up")},"Serveur Docker maison : reverse proxy, sauvegardes, bots."),
+          h(C.Card,{meta:"smarthome",title:"Domotique",href:"#",actions:h(C.Badge,{tone:"warn"},"en cours")},"Capteurs, automatisations et tableaux de bord."),
+          h(C.Card,{meta:"maker",title:"Canne imprimée en 3D",href:"#",actions:h(C.Badge,{tone:"info"},"petg")},"Pommeau imprimé, fût en carbone."))),
+      h("section", {className:"section",id:"lab"}, h("h2",null,"homelab en direct"),
+        h(C.Terminal,{prompt:"clem2k@vision:~$",lines:[{prompt:"clem2k@vision:~$",text:"docker compose ps"},{tone:"ok",text:"traefik     running"},{tone:"ok",text:"nextcloud   running"},{tone:"warn",text:"backup      restarting"}]})),
+      h("section", {className:"section",id:"blog"}, h("h2",null,"me contacter"),
+        h("div",{style:{display:"grid",gap:16,maxWidth:480}},
+          h(C.TextField,{label:"Email",placeholder:"toi@exemple.fr",type:"email"}),
+          h(C.TextArea,{label:"Message",placeholder:"Salut clem2k…"}),
+          h("div",null,h(C.Button,{variant:"primary"},"Envoyer"))))),
+    h(C.Footer, {tagline:"Dev, maker, retro gamer.", columns:[{title:"projets",links:[{label:"homelab"},{label:"smarthome"}]},{title:"écrits",links:[{label:"blog"},{label:"notes"}]},{title:"ailleurs",links:[{label:"github",href:"https://github.com/clem2k"}]}]})
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>

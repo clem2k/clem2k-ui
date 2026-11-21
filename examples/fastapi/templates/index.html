@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8"><title>vision</title>
+  {{ clem2k_head() }}
+</head>
+<body class="ck-wall">
+  <nav class="ck-glass ck-nav" style="margin-top:12px">
+    <a class="ck-brand" href="/"><img src="/clem2k/logo/logo-transparent.png" alt="">vision</a>
+    <div class="ck-nav-links"><a href="/" aria-current="page">services</a><a href="/logs">logs</a></div>
+  </nav>
+  <main style="max-width:880px;margin:40px auto;padding:24px;background:var(--bg-100)">
+    <h1 class="ck-t-h1" style="color:var(--ink-strong)">{{ clem2k_icon("server", 24) }} services</h1>
+    <table class="ck-table">
+      <thead><tr><th>service</th><th>état</th></tr></thead>
+      <tbody>
+      {% for name, state, tone in services %}
+        <tr><td>{{ name }}</td><td><span class="ck-badge ck-badge-{{ tone }}">{{ state }}</span></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

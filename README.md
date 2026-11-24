@@ -6,11 +6,11 @@ Le design system **clem2k** en kit réutilisable : esthétique terminal / Matrix
 
 | | |
 |---|---|
-| Tokens | 2 thèmes (`dark` par défaut, `hc` haut contraste), couleurs, typo, espacements, rayons, verre |
+| Tokens | 3 thèmes (`dark` par défaut, `light`, `hc` haut contraste) + `auto` qui suit le système, couleurs, typo, espacements, rayons, verre |
 | CSS | `dist/clem2k.css` = tokens + styles des composants, classes `ck-` utilisables sans React |
 | React 18 | 41 composants web + desktop (`NavBar`, `Hero`, `Window`, `Sidebar`, `Dock`, `CommandPalette`…) en ES module ou script global |
 | Tailwind | preset branché sur les variables CSS |
-| Python | paquet `clem2k_ui` : FastAPI/Starlette, Flask, PySide/PyQt (QSS), Rich, Textual |
+| Python | paquet `clem2k_ui` : FastAPI/Starlette, Flask, PySide/PyQt (QSS dark/light/hc), Rich, Textual |
 | Icônes | 25 icônes pixel 12×12 en SVG (`currentColor`) + sprite |
 | Logo | buste à cravate néon, favicon `.ico`, apple-touch-icon |
 | Claude | skill `clem2k-design` pour que Claude applique le système partout |
@@ -21,7 +21,7 @@ Le design system **clem2k** en kit réutilisable : esthétique terminal / Matrix
 
 ```html
 <html data-theme="dark">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/clem2k/clem2k-ui@v0.1.0/dist/clem2k.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/clem2k/clem2k-ui@v0.2.0/dist/clem2k.css">
 <button class="ck-btn ck-btn-primary">Déployer</button>
 ```
 
@@ -30,7 +30,7 @@ Le design system **clem2k** en kit réutilisable : esthétique terminal / Matrix
 ### React / Vite / Next
 
 ```bash
-npm i github:clem2k/clem2k-ui#v0.1.0
+npm i github:clem2k/clem2k-ui#v0.2.0
 ```
 
 ```jsx
@@ -43,7 +43,7 @@ import { NavBar, Hero, Button } from "clem2k-ui";
 ### Python
 
 ```bash
-pip install "clem2k-ui[fastapi] @ git+https://github.com/clem2k/clem2k-ui@v0.1.0"
+pip install "clem2k-ui[fastapi] @ git+https://github.com/clem2k/clem2k-ui@v0.2.0"
 ```
 
 ```python
@@ -59,7 +59,7 @@ Tous les cas (Flask, Django, Tailwind, Tauri/Electron, Textual, sous-module git�
 
 Ouvre-les directement dans un navigateur :
 
-- [`examples/web.html`](examples/web.html) : page d'accueil (NavBar en verre, Hero, cartes, terminal, formulaire, footer, bascule de thème).
+- [`examples/web.html`](examples/web.html) : page d'accueil (NavBar en verre, Hero, cartes, terminal, formulaire, footer, bascule de thème dark / light / hc).
 - [`examples/desktop.html`](examples/desktop.html) : app desktop (Window, Sidebar, Toolbar, Tabs, Table, StatusBar, Dock, Ctrl K, Dialog, Toast).
 - [`examples/html-only.html`](examples/html-only.html) : les mêmes classes sans React.
 - [`examples/fastapi/`](examples/fastapi) et [`examples/pyside/`](examples/pyside).

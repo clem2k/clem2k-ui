@@ -39,7 +39,8 @@ Toujours passer par `clem2k-ui` dans un projet de code (version épinglée), jam
 - Bots : couleur `bot` + avatar bot.
 - Une seule police : JetBrains Mono, repli `ui-monospace`.
 - Icônes : icônes pixel clem2k (`Icon`, `dist/icons/*.svg`, `dist/icons.svg`), tailles multiples de 12 uniquement. Pas d'emoji dans l'interface.
-- Toujours `focus-ring` visible ; respecter `prefers-reduced-motion` et `prefers-reduced-transparency` ; proposer le thème `hc`.
+- Thèmes : `dark` par défaut ; `light` quand Clem veut du clair (impression, plein jour) ; `hc` en option d'accessibilité ; `auto` pour suivre le système. Jamais de couleur propre à un thème en dur : toujours les variables.
+- Toujours `focus-ring` visible ; respecter `prefers-reduced-motion` et `prefers-reduced-transparency`.
 - Contraste vérifié : 4.5:1 minimum pour le texte, 3:1 pour bordures de contrôle et icônes.
 - Marque : « clem2k » en minuscules ; logo = buste à cravate néon (`assets/logo/`), favicon 16px = cravate pixel.
 - Ton des textes d'interface : français, tutoiement, direct et technique ; un clin d'œil geek permis dans les titres et états vides, jamais dans les erreurs.
@@ -63,4 +64,4 @@ Espacements 4/8/16/24/40. Rayons 0, 2, 4 (contenu) · 12, 20, 999 (verre). Focus
 
 ## 5. Avant de livrer
 
-Relire le rendu (capture si possible) en `dark` et `hc` : néon utilisé avec parcimonie, aucun texte long sur du verre, contrastes OK, icônes nettes. Dire en une ligne que le design suit clem2k et signaler toute entorse faite à la demande de Clem.
+Relire le rendu (capture si possible) en `dark`, `light` et `hc` : néon utilisé avec parcimonie, aucun texte long sur du verre, contrastes OK, icônes nettes. Dire en une ligne que le design suit clem2k et signaler toute entorse faite à la demande de Clem.

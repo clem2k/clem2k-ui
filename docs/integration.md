@@ -3,18 +3,22 @@
 Trois choses à retenir, quel que soit le projet :
 
 1. Charger **`clem2k.css`** (tokens + composants) ou, si tu as déjà ton CSS, **`tokens.css`** seul.
-2. Poser `data-theme="dark"` (défaut) ou `data-theme="hc"` sur `<html>`.
-3. Épingler une **version** (`v0.1.0`) : tes projets ne bougent pas tant que tu ne mets pas à jour.
+2. Poser le thème sur `<html>` :
+   - `data-theme="dark"` : défaut (aussi sans attribut) ;
+   - `data-theme="light"` : thème clair (papier, vert phosphore profond) ;
+   - `data-theme="hc"` : haut contraste (AAA) ;
+   - `data-theme="auto"` : suit le réglage clair/sombre du système.
+3. Épingler une **version** (`v0.2.0`) : tes projets ne bougent pas tant que tu ne mets pas à jour.
 
 ## Comment récupérer le kit
 
 | méthode | commande | quand |
 |---|---|---|
-| npm depuis GitHub | `npm i github:clem2k/clem2k-ui#v0.1.0` | projets JS/TS |
-| pip depuis GitHub | `pip install "clem2k-ui @ git+https://github.com/clem2k/clem2k-ui@v0.1.0"` | projets Python |
+| npm depuis GitHub | `npm i github:clem2k/clem2k-ui#v0.2.0` | projets JS/TS |
+| pip depuis GitHub | `pip install "clem2k-ui @ git+https://github.com/clem2k/clem2k-ui@v0.2.0"` | projets Python |
 | sous-module git | `git submodule add https://github.com/clem2k/clem2k-ui vendor/clem2k-ui` | n'importe quoi, sans gestionnaire de paquets |
-| CDN jsDelivr | `https://cdn.jsdelivr.net/gh/clem2k/clem2k-ui@v0.1.0/dist/clem2k.css` | sites statiques (dépôt public uniquement) |
-| VISION | sers `dist/` derrière Traefik, ex. `https://ui.<ton-domaine>/v0.1.0/clem2k.css` | dépôt privé, homelab |
+| CDN jsDelivr | `https://cdn.jsdelivr.net/gh/clem2k/clem2k-ui@v0.2.0/dist/clem2k.css` | sites statiques (dépôt public uniquement) |
+| VISION | sers `dist/` derrière Traefik, ex. `https://ui.<ton-domaine>/v0.2.0/clem2k.css` | dépôt privé, homelab |
 
 Mettre à jour : changer le tag (`#v0.2.0`, `@v0.2.0`) puis réinstaller ; sous-module : `git -C vendor/clem2k-ui checkout v0.2.0`.
 
@@ -60,7 +64,7 @@ import { Window, Sidebar, Toolbar, IconButton, StatusBar, Table } from "clem2k-u
 module.exports = { presets: [require("clem2k-ui/tailwind")], content: ["./src/**/*.{html,jsx,tsx}"] };
 ```
 
-Charger aussi `clem2k-ui/tokens.css` (les classes pointent vers les variables CSS, donc le thème `hc` marche tout seul). Exemples : `bg-bg-100 text-ink border-line-strong rounded-sm`, `text-neon`, `rounded-xl backdrop-blur-glass bg-glass-fill`, `text-ck-body`, `p-ck-3`, `shadow-glass-shadow`.
+Charger aussi `clem2k-ui/tokens.css` (les classes pointent vers les variables CSS, donc `light`, `hc` et `auto` marchent tout seuls). Exemples : `bg-bg-100 text-ink border-line-strong rounded-sm`, `text-neon`, `rounded-xl backdrop-blur-glass bg-glass-fill`, `text-ck-body`, `p-ck-3`, `shadow-glass-shadow`.
 
 ## FastAPI / Starlette
 
@@ -93,7 +97,7 @@ Comme le web. Le verre fonctionne (`backdrop-filter`). Pour une vraie fenêtre t
 
 ```python
 import clem2k_ui
-clem2k_ui.apply_qt(app)            # ou apply_qt(app, "hc")
+clem2k_ui.apply_qt(app)            # ou apply_qt(app, "light") / apply_qt(app, "hc")
 button.setProperty("variant", "primary")   # primary | danger | ghost
 label.setProperty("role", "muted")         # muted | h1 | h2
 ```
@@ -107,7 +111,7 @@ from rich.console import Console
 console = Console(theme=clem2k_ui.rich_theme())
 console.print("[ok][ok][/ok] backup terminé   [err][err][/err] sentinel arrêté")
 
-app.register_theme(clem2k_ui.textual_theme()); app.theme = "clem2k"   # Textual >= 0.86
+app.register_theme(clem2k_ui.textual_theme()); app.theme = "clem2k"   # Textual >= 0.86 ; textual_theme("light") → "clem2k-light"
 ```
 
 ## Valeurs brutes

@@ -2,9 +2,9 @@
 
 ## Modifier une valeur
 
-1. Éditer `tokens/tokens.json` (format : listes `{"name","value","usage"}` ; couleurs par thème `{"dark": …, "hc": …}`).
+1. Éditer `tokens/tokens.json` (format : listes `{"name","value","usage"}` ; couleurs par thème `{"dark": …, "hc": …, "light": …}`).
 2. `python3 scripts/build.py` (ou `npm run build`) : régénère `dist/` et `docs/tokens.md`.
-3. Vérifier `examples/web.html` et `examples/desktop.html` dans le navigateur, en `dark` et `hc`.
+3. Vérifier `examples/web.html` et `examples/desktop.html` dans le navigateur, en `dark`, `light` et `hc`.
 4. Vérifier les contrastes si une couleur de texte ou de fond change (règles dans [accessibility.md](accessibility.md)).
 
 ## Modifier un composant

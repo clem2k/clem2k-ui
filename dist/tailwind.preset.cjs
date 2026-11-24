@@ -25,7 +25,12 @@ module.exports = {
         "glass-fill": "var(--glass-fill)",
         "glass-fill-hover": "var(--glass-fill-hover)",
         "glass-edge": "var(--glass-edge)",
-        "glass-sheen": "var(--glass-sheen)"
+        "glass-sheen": "var(--glass-sheen)",
+        "hover-tint": "var(--hover-tint)",
+        "hover-tint-strong": "var(--hover-tint-strong)",
+        "scrim": "var(--scrim)",
+        "field-on-glass": "var(--field-on-glass)",
+        "wall-dot": "var(--wall-dot)"
       },
       "borderRadius": {
         "0": "var(--radius-0)",

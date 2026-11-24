@@ -27,7 +27,7 @@ Installation :
 
 Ce projet utilise le design system **clem2k** via `clem2k-ui` (https://github.com/clem2k/clem2k-ui, version épinglée dans les dépendances).
 
-- Charger `clem2k.css` (ou `tokens.css` + Tailwind preset) ; `data-theme="dark"` sur `<html>`, `hc` pour le haut contraste.
+- Charger `clem2k.css` (ou `tokens.css` + Tailwind preset) ; `data-theme="dark"` sur `<html>` (`light` pour le clair, `hc` pour le haut contraste, `auto` pour suivre le système).
 - Utiliser les composants `clem2k-ui` (React) ou les classes `ck-` ; ne jamais coder une couleur, un rayon ou une police en dur : toujours les variables (`var(--neon)`, `var(--radius-sm)`…).
 - Ce qui flotte (nav, toolbars, sidebar, menus, toasts, dialogs) est en verre et arrondi ; ce qui est posé (texte, cartes, tableaux, code, champs) est opaque et carré.
 - Lisible d'abord : texte en `ink` sur `bg-100`, néon pour les accents seulement, statuts avec préfixe `[ok] [warn] [info] [err]`.

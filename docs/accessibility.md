@@ -16,13 +16,26 @@ clem2k est fait pour être lu longtemps. Ces règles ne se négocient pas.
 | `on-neon` sur `neon` | bouton primaire | 11.8:1 |
 | `on-bot` sur `bot` | bouton danger | 5.5:1 |
 
+## Contrastes (thème light)
+
+| texte | fond | ratio |
+|---|---|---|
+| `ink` | `bg-000` → `bg-300` | ≥ 12.7:1 |
+| `ink-muted` | tous fonds | ≥ 5.7:1 |
+| `neon` (#156b08) | tous fonds | ≥ 5.3:1 |
+| `bot-text` / `py-blue-text` / `py-yellow` | tous fonds | ≥ 4.9:1 |
+| `on-neon` (blanc) sur `neon` | bouton primaire | 6.7:1 |
+| `line-strong` | tous fonds | ≥ 3.4:1 |
+
+En clair, le néon vif `#3be81a` serait illisible sur papier : `neon` devient un vert phosphore profond, et `py-yellow` un ocre. Le verre est blanc à 85 % : `ink` garde 11:1 même au-dessus d'un contenu noir.
+
 Le thème **`hc`** monte tout le texte à 7:1 minimum (AAA), rend les filets visibles (5:1), le verre quasi opaque et l'anneau de focus à 3px.
 
 `bot` et `py-blue` (couleurs d'origine) restent pour les remplissages, icônes et bordures ; pour du **texte**, toujours `bot-text` et `py-blue-text`.
 
 ## Verre
 
-- `glass-fill` est opaque à 80 % : `ink` garde 6.4:1 même si une zone blanche ou néon passe derrière (7.7:1 en usage normal).
+- Dark : `glass-fill` est opaque à 80 % : `ink` garde 6.4:1 même si une zone blanche ou néon passe derrière (7.7:1 en usage normal).
 - Sur du verre, `ink-muted` seulement pour libellés de section et compteurs (peut tomber à 3.9:1 sur fond très clair).
 - Jamais de texte long sur du verre. Le verre est pour le chrome.
 - `prefers-reduced-transparency: reduce` → verre opaque `bg-200`.

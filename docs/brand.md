@@ -14,7 +14,7 @@
 
 ## Couleur
 
-Deux thèmes : **Dark** (défaut) et **High contrast** (`hc`) — texte ≥ 7:1 partout, filets `line` visibles (5:1), anneau de focus 3px, pas de `glow`. Les noms de tokens sont identiques : basculer avec `data-theme="hc"`.
+Trois thèmes : **Dark** (défaut), **Light** (`light` : papier légèrement vert, vert phosphore profond `#156b08` comme accent, verre blanc) et **High contrast** (`hc`) — texte ≥ 7:1 partout, filets `line` visibles (5:1), anneau de focus 3px, pas de `glow`. Les noms de tokens sont identiques : basculer avec `data-theme="light"`, `"hc"` ou `"auto"` (suit le réglage clair/sombre du système).
 
 - Fonds, du plus profond au plus élevé : `bg-000` (panneaux terminal, blocs de code) → `bg-100` (page) → `bg-200` (panneaux, cartes, champs) → `bg-300` (survol, ligne active). Ne jamais utiliser `#000` pur.
 - Texte : `ink` pour tout le texte courant, `ink-strong` pour les titres, `ink-muted` pour les métadonnées, horodatages, placeholders et commentaires de code. En Dark, `ink-muted` dépasse 7:1 sur `bg-000` à `bg-200` (6.8:1 sur `bg-300`).

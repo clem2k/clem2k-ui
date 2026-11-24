@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "clem2k-ui"
-version = "0.1.0"
+version = "0.2.0"
 description = "clem2k design system: tokens, CSS, React components, Qt/Rich/Textual themes and pixel icons."
 readme = "README.md"
 requires-python = ">=3.10"

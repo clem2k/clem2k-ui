@@ -3,7 +3,7 @@
 
 Pure standard library. Run from the repo root:  python3 scripts/build.py
 Outputs (never edit dist/ by hand):
-  dist/tokens.css          CSS custom properties, themes dark (default) + hc
+  dist/tokens.css          CSS custom properties: dark (default), hc, light, auto (follows the OS)
   dist/tokens.json         flat resolved tokens {theme: {name: value}}
   dist/clem2k.css          tokens.css + component styles (one file to link)
   dist/clem2k.components.css  component styles only
@@ -13,7 +13,7 @@ Outputs (never edit dist/ by hand):
   docs/tokens.md           token reference table
   dist/tailwind.preset.cjs Tailwind preset bound to the CSS variables
   dist/clem2k.qss          Qt stylesheet (PySide/PyQt), dark theme
-  dist/clem2k-hc.qss       Qt stylesheet, High contrast theme
+  dist/clem2k-<theme>.qss  Qt stylesheet for every other theme (hc, light)
   dist/icons/*.svg         pixel icons, fill=currentColor
   dist/icons.svg           SVG sprite (<use href="icons.svg#terminal">)
 """
@@ -58,6 +58,10 @@ def css_tokens(tokens):
         lines.append(sel + " {")
         lines += [f"  --{n}: {v};" for n, v in by_theme[th].items()]
         lines.append("}")
+    if "light" in by_theme:  # data-theme="auto": follow the OS (dark by default, light when the OS asks)
+        lines.append('@media (prefers-color-scheme: light) {\n  [data-theme="auto"] {')
+        lines += [f"    --{n}: {v};" for n, v in by_theme["light"].items()]
+        lines.append("  }\n}")
     lines.append(":root {")
     lines += [f"  --{n}: {v};" for n, v in flat.items()]
     lines.append("}")
@@ -218,10 +222,12 @@ def docs_tokens(tokens):
 
 
 def main():
+    global _started
+    import time
+    _started = time.time() - 1
     tokens = load_tokens()
-    if DIST.exists():
-        shutil.rmtree(DIST)
-    DIST.mkdir()
+    before = {f for f in DIST.rglob("*") if f.is_file()} if DIST.exists() else set()
+    DIST.mkdir(exist_ok=True)
     tcss = css_tokens(tokens)
     comp = (SRC / "clem2k.css").read_text()
     imp = re.match(r'(@import url\([^)]*\);\s*)', comp)
@@ -238,10 +244,15 @@ def main():
     _, by_theme, flat = resolve(tokens)
     (DIST / "tokens.json").write_text(json.dumps({"themes": by_theme, "global": flat, "type": tokens["type"]}, indent=1, ensure_ascii=False))
     (DIST / "tailwind.preset.cjs").write_text(tailwind(tokens))
-    (DIST / "clem2k.qss").write_text(qss(tokens, "dark"))
-    (DIST / "clem2k-hc.qss").write_text(qss(tokens, "hc"))
+    themes = [t["id"] for t in tokens["color"]["themes"]]
+    for th in themes:
+        (DIST / ("clem2k.qss" if th == themes[0] else f"clem2k-{th}.qss")).write_text(qss(tokens, th))
     n = icons()
-    print(f"dist/ built: tokens ({sum(len(v) for v in by_theme.values())} themed values), {n} icons, tailwind preset, 2 QSS themes")
+    # remove files a previous build produced but this one did not (renamed icon, dropped theme…)
+    stale = [f for f in before if f.stat().st_mtime < _started]
+    for f in stale:
+        f.unlink()
+    print(f"dist/ built: themes {', '.join(themes)} ({sum(len(v) for v in by_theme.values())} themed values), {n} icons, tailwind preset, {len(themes)} QSS files")
 
 
 if __name__ == "__main__":

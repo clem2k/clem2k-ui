@@ -16,7 +16,7 @@ from pathlib import Path
 
 __all__ = ["STATIC_DIR", "tokens", "qss", "icon_svg", "head_tags", "mount", "flask_blueprint",
            "apply_qt", "rich_theme", "textual_theme"]
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 _here = Path(__file__).resolve().parent
 # Installed wheel: files live in clem2k_ui/static. Editable / repo checkout: fall back to <repo>/dist.
@@ -29,13 +29,13 @@ def _resolved() -> dict:
 
 
 def tokens(theme: str = "dark") -> dict[str, str]:
-    """Every token for a theme ("dark" or "hc"): colors, shadows, spacing, radii, blur, fonts."""
+    """Every token for a theme ("dark", "hc" or "light"): colors, shadows, spacing, radii, blur, fonts."""
     data = _resolved()
     return {**data["global"], **data["themes"][theme]}
 
 
 def qss(theme: str = "dark") -> str:
-    """Qt stylesheet. Glass becomes opaque bg-200 (Qt has no backdrop blur)."""
+    """Qt stylesheet for "dark", "hc" or "light". Glass becomes opaque bg-200 (Qt has no backdrop blur)."""
     name = "clem2k.qss" if theme == "dark" else f"clem2k-{theme}.qss"
     return (STATIC_DIR / name).read_text(encoding="utf-8")
 
@@ -51,7 +51,8 @@ def icon_svg(name: str, size: int = 24, color: str | None = None) -> str:
 
 
 def head_tags(prefix: str = "/clem2k", react: bool = False, theme: str | None = None) -> str:
-    """<link>/<script> tags for an HTML <head>. react=True also loads React 18 + the components."""
+    """<link>/<script> tags for an HTML <head>. react=True also loads React 18 + the components.
+    theme: "dark" (default), "hc", "light" or "auto" (follows the OS)."""
     tags = [f'<link rel="stylesheet" href="{prefix}/clem2k.css">',
             f'<link rel="icon" href="{prefix}/logo/clem2k.ico">']
     if react:
@@ -111,7 +112,7 @@ def textual_theme(theme: str = "dark"):
     """Textual Theme (textual >= 0.86): app.register_theme(textual_theme()); app.theme = "clem2k"."""
     from textual.theme import Theme
     t = tokens(theme)
-    return Theme(name="clem2k" if theme == "dark" else f"clem2k-{theme}", dark=True,
+    return Theme(name="clem2k" if theme == "dark" else f"clem2k-{theme}", dark=theme != "light",
                  primary=t["neon"], secondary=t["py-blue"], accent=t["neon-soft"], warning=t["py-yellow"],
                  error=t["bot-text"], success=t["neon"], foreground=t["ink"], background=t["bg-100"],
                  surface=t["bg-200"], panel=t["bg-300"])

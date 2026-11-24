@@ -1,6 +1,6 @@
 {
   "name": "clem2k-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "clem2k design system: tokens, CSS, React 18 components, Tailwind preset, Qt theme and pixel icons.",
   "license": "UNLICENSED",
   "private": true,
